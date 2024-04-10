@@ -2,7 +2,7 @@ import {Table, Dropdown, Form, Button, Alert} from 'react-bootstrap';
 import React, {useState} from 'react';
 import Alarm from './alert';
 import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
-
+import {Routes, Route, Link, useNavigate} from "react-router-dom";
 function greeting() {
     alert("Hello! I am an alert box!!")
 }
@@ -23,7 +23,7 @@ let variables = [
     'Edit']
 
 let customers = [{
-    id:1,
+    id:0,
     qn:67,
     revision:1,
     company:'PT Lautan Natural Krimerindo',
@@ -58,44 +58,6 @@ let customers = [{
 }   
 ]
 
-var customer1 = [
-    1,
-    67,
-    1,
-    'PT Lautan Natural Krimerindo',
-    'Pak Rofiq',
-    '2024/5/23',
-    <Form.Select aria-label="Default select example">
-      <option value="1">Goods</option>
-      <option value="2">Project</option>
-    </Form.Select>,
-    125000000,
-    67000000,
-    '86%',
-    58000000,
-    'Open',
-    <Button>Quick Edit</Button>
-]
-
-var customer2 = [
-    2,
-    83,
-    1,
-    'PT Neira Bumi Energi',
-    '',
-    '2024/5/15',
-    <Form.Select aria-label="Default select example">
-        <option value="1">Goods</option>
-        <option value="2">Project</option>
-    </Form.Select>,
-    15400000,
-    12000000,
-    '21%',
-    3400000,
-    'Open',
-    <Button>Quick Edit</Button>
-]
-
 var customer3 = [
     3,
     107,
@@ -116,6 +78,14 @@ var customer3 = [
 
 function CustomersTable() {
 
+  const navigate = useNavigate();
+  const checkQuotation = (nomor)=> {
+    navigate(`/quotation?id=${nomor}`);
+    console.log(customers[0].id);
+  };
+
+  
+
     const listItems = customers.map(customer =>
     <tr>
         <td>{customer.id}</td>
@@ -130,7 +100,7 @@ function CustomersTable() {
         <td>{customer.netMargin}</td>
         <td>{customer.netProfit}</td>
         <td>{customer.note}</td>
-        <td><Button onClick={[]}>Edit</Button></td>
+        <td><Button onClick={() =>checkQuotation(customer.id)}>Edit</Button></td>
     </tr>
     );
 
@@ -149,6 +119,7 @@ function CustomersTable() {
         {listItems}
       </tbody>
     </Table>
+    <h1>{customers[1].investment}</h1>
     </>
 
     
