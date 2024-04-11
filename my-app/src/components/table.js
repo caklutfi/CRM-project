@@ -19,7 +19,7 @@ let variables = [
     'Investment',
     'Net margin',
     'Net Profit',
-    'Note',
+    'Status',
     'Edit']
 
 let customers = [{

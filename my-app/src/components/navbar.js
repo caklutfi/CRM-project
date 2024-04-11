@@ -8,14 +8,17 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
 
 function Navigasi() {
+
+
+
   return (
     <>
       <Navbar bg="light" data-bs-theme="light">
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand href="/">PAS ERP</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Dashboard</Nav.Link>
-            <Nav.Link href="#features">Customers</Nav.Link>
+            <Nav.Link href="/">Dashboard</Nav.Link>
+            <Nav.Link href="/list">Quotation</Nav.Link>
             <Nav.Link href="#pricing">Companies</Nav.Link>
             </Nav>
           
