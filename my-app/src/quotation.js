@@ -6,7 +6,7 @@ import pelanggan from "./database";
 import {PieChart} from 'react-minimal-pie-chart';
 import CustomersTable from "./components/table";
 import './BlinkingBadge.css'
-import db from './firebase'
+
 import {collection, addDoc} from 'firebase/firestore'
 
 
@@ -38,24 +38,6 @@ function Quotation(){
         setRowData([...rowData, newRow]);
         setShowForm(false);
     }
-
-    const cloudSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const docRef = await addDoc(collection(db,'bom',{
-                no: rowData[0],
-                item: rowData[1],
-                price: rowData[2],
-                quantity: rowData[3],
-                uom:rowData[4],
-            }));
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
-        }
-    
 
     return(
     <>
@@ -103,7 +85,7 @@ function Quotation(){
             </Row>
             <Row>
                 <br/><br/>
-                <h2>Bill of Material <Button type='success' onClick={cloudSubmit}> + Add item</Button></h2>
+                <h2>Bill of Material <Button type='success' onClick=''> + Add item</Button></h2>
                 <p>Last updated 24/03/2024</p>
 
               

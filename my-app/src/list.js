@@ -9,7 +9,8 @@ import Alarm from './components/alert';
 import { useState, useEffect } from 'react';
 import {Routes, Route, Link} from "react-router-dom";
 import  axios  from 'axios';
-
+import { db } from './firebase';
+import {getDocs, collection, onSnapshot} from "firebase/firestore";
 
 
 
@@ -49,7 +50,23 @@ function List() {
     setButtonClicked(true);
   };
 
+  const [user,setUser] = useState([])
+
+  useEffect(()=>{
+    const unsub = onSnapshot(collection(db,'erp'),(snapshot)=>{
+      console.log(snapshot.docs[0].data())
+      setUser(snapshot.docs[0].data())
+    });
+    return unsub
+  },[])
+
+  let dokumen = user.map(detail =>
+    <h1>{detail.representative}</h1>
+  );
+
+
   return (
+    <>
     <div className="App">
       <Navigasi />
       
@@ -70,10 +87,12 @@ function List() {
       </Container>
       <Button onClick={Fungsi}>Click me</Button>
       <Button onClick={handleClick}>Call API</Button>
+      <br/>
 
 
 
     </div>
+    </>
   );
 }
 
