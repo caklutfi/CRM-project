@@ -7,22 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import CustomersTable from './components/table';
 import Alarm from './components/alert';
 import { useState, useEffect } from 'react';
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, Link} from "react-router-dom";
 import  axios  from 'axios';
-function Profile() {
-  return (
-    <img
-      src="https://i.imgur.com/MK3eW3As.jpg"
-      alt="Katherine Johnson"
-    />
-  );
-}
 
 
 
 
 
-function App() {
+function List() {
   let [notif, setNotif] = useState('default');
   let Fungsi = () => {
     setNotif(notif === 'default'? 'altered':'default');
@@ -70,8 +62,7 @@ function App() {
 
       <Container fluid className="container-with-shadow">
         <Row>
-          <Col sm={1}>navigasi</Col>
-          <Col sm={10}><CustomersTable /></Col>
+          <Col><CustomersTable /></Col>
 
 
         </Row>
@@ -86,4 +77,4 @@ function App() {
   );
 }
 
-export default App;
+export default List;

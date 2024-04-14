@@ -2,7 +2,7 @@ import Form from 'react-bootstrap'
 
 const pelanggan =[{
 
-    id:1,
+    id:0,
     qn:67,
     date: Date('2024-04-11T12:00:00'),
     revision:1,
@@ -18,20 +18,28 @@ const pelanggan =[{
     netProfit:58000000,
     note:'open',
     bom:
-        ['modif kontainer 40ft', 98000000, 1,'lot']
+        [
+            {
+                no: 1,
+                item: 'kontainer 40ft bekas', 
+                price: 780000000, 
+                qty:1,
+                uom: 'Unit'
+            }
+        ],
 
 
     
 },
 {
-    id:2,
+    id:1,
     qn:83,
     revision:1,
     company:'PT Neira Bumi Energi',
     representative:'',
     dueDate:'2024/4/17',
     typeOfDeal: 'Project',
-    value:15400000,
+    value: 15400000,
     investment:12000000,
     netMargin:'21%',
     netProfit:3400000,

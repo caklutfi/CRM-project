@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import Alarm from './alert';
 import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
 import {Routes, Route, Link, useNavigate} from "react-router-dom";
+import pelanggan from '../database';
+
 function greeting() {
     alert("Hello! I am an alert box!!")
 }
@@ -81,12 +83,11 @@ function CustomersTable() {
   const navigate = useNavigate();
   const checkQuotation = (nomor)=> {
     navigate(`/quotation?id=${nomor}`);
-    console.log(customers[0].id);
   };
 
   
 
-    const listItems = customers.map(customer =>
+    const listItems = pelanggan.map(customer =>
     <tr>
         <td>{customer.id}</td>
         <td>{customer.qn}</td>
@@ -119,7 +120,6 @@ function CustomersTable() {
         {listItems}
       </tbody>
     </Table>
-    <h1>{customers[1].investment}</h1>
     </>
 
     

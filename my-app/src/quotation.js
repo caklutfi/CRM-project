@@ -1,11 +1,13 @@
 import { Button, Badge, Container, Row, Col, Card, Table} from "react-bootstrap";
-import React from "react";
+import React, {useState}  from "react";
 import Navigasi from "./components/navbar";
 import { useLocation, useSearchParams } from "react-router-dom";
 import pelanggan from "./database";
 import {PieChart} from 'react-minimal-pie-chart';
 import CustomersTable from "./components/table";
 import './BlinkingBadge.css'
+import db from './firebase'
+import {collection, addDoc} from 'firebase/firestore'
 
 
 function Quotation(){
@@ -16,7 +18,44 @@ function Quotation(){
     let sums = pelanggan[nomor].bom[1]*pelanggan[nomor].bom[2]
     function sumItem() {
         return (pelanggan[nomor].bom[1]*pelanggan[nomor].bom[2]);
+    };
+
+
+    const [showForm, setShowForm] = useState(false);
+    const [rowData, setRowData] = useState([]);
+
+    const handleAddRowClick = () => {
+        setShowForm(true);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const newRow = [];
+        for (let i = 0; i < 5; i++) {
+            newRow.push(formData.get(`column${i + 1}`));
+        }
+        setRowData([...rowData, newRow]);
+        setShowForm(false);
     }
+
+    const cloudSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const docRef = await addDoc(collection(db,'bom',{
+                no: rowData[0],
+                item: rowData[1],
+                price: rowData[2],
+                quantity: rowData[3],
+                uom:rowData[4],
+            }));
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+        }
+    
 
     return(
     <>
@@ -64,8 +103,12 @@ function Quotation(){
             </Row>
             <Row>
                 <br/><br/>
-                <h2>Bill of Material</h2>
+                <h2>Bill of Material <Button type='success' onClick={cloudSubmit}> + Add item</Button></h2>
                 <p>Last updated 24/03/2024</p>
+
+              
+
+
                 <Table>
                     <thead>
                         <tr>
@@ -86,21 +129,71 @@ function Quotation(){
                         <td>{pelanggan[nomor].bom[0].uom}</td>                            
                     </tr>
                     <tr>
-                        <td>{pelanggan[nomor].bom[1].no}</td>
-                        <td>{pelanggan[nomor].bom[1].item}</td>
-                        <td>{pelanggan[nomor].bom[1].price}</td>
-                        <td>{pelanggan[nomor].bom[1].qty}</td>
-                        <td>{pelanggan[nomor].bom[1].uom}</td>                            
-                        </tr>    
+                    
+                    </tr> 
+
+
+                    </tbody>
+
+                </Table>
+                        
+            <Table>
+                <thead>
+                        <tr>
+                        <td>No</td>
+                        <td>Item</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Measurement</td>
+                        <td>Total</td>
+                        </tr>
+                </thead>
+                <tbody>
+                    {rowData.map((row, index) => (
+                        <tr key={index}>
+                            {row.map((cell, cellIndex) => (
+                                <td key={cellIndex}>{cell}</td>
+                            ))}
+                        </tr>
+                    ))}
                     <tr>
                         <th>Grand Total</th>
                         <th/><th/><th/><th/>
                         <th>15400000</th>
                     </tr>
+                </tbody>
+            </Table>
+            {showForm && (
+                <form onSubmit={handleSubmit}>
+                    <td>
+                    
+                        <input type="text" name="column1" placeholder="No" />
+                    
+                    </td>
+                    <td>
 
-                    </tbody>
+                        <input type="text" name="column2" />
 
-                </Table>
+                    </td>
+                    <td>
+                    
+                        <input type="text" name="column3" />
+                    
+                    </td>
+                    <td>
+                    
+                        <input type="text" name="column4" />
+                    
+                    </td>
+                    <td>
+                    
+                        <input type="text" name="column5" />
+                    
+                    </td>
+                    <button type="submit">Submit</button>
+                </form>
+            )}
+                <Button onClick={handleAddRowClick}>Add Row</Button>
             </Row>
         
         </Container>
