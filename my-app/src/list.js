@@ -1,6 +1,6 @@
 
 import './App.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import Navigasi from './components/navbar';
 import ProgressCircle from './components/progressBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -54,15 +54,21 @@ function List() {
 
   useEffect(()=>{
     const unsub = onSnapshot(collection(db,'erp'),(snapshot)=>{
-      console.log(snapshot.docs[0].data())
-      setUser(snapshot.docs[0].data())
+      //console.log(snapshot.docs[0].data())
+      const storeData = snapshot.docs.map(doc => ({
+        ...doc.data()
+      }))
+      setUser(storeData)
+      //console.log(snapshot.docs)
     });
     return unsub
   },[])
 
-  let dokumen = user.map(detail =>
-    <h1>{detail.representative}</h1>
-  );
+  console.log(user)
+
+
+
+
 
 
   return (
@@ -80,14 +86,54 @@ function List() {
       <Container fluid className="container-with-shadow">
         <Row>
           <Col><CustomersTable /></Col>
-
-
+        </Row>
+        <Row>
+        <Table>
+        <thead>
+          <th>#</th>
+          <th>QN</th>  
+          <th>Revision</th> 
+          <th>Company</th> 
+          <th>Representative</th> 
+          <th>Due Date</th>
+          <th>Type of Deal</th>
+          <th>Value</th>
+          <th>Investment</th>
+          <th>Net Margin</th>
+          <th>Net Profit</th>
+          <th>Status</th>
+          <th>Edit</th>
+        </thead>
+        <tbody>
+          {user.map(item =>(
+            
+            <tr>
+              <td>{item.id}</td>              
+              <td>{item.qn}</td>
+              <td>{item.revision}</td>
+              <td>{item.company}</td>
+              <td>{item.representative}</td>
+              <td>kosong</td>
+              <td>{item.typeOfDeal}</td>
+              <td>{item.value}</td>
+              <td>{item.investment}</td>
+              <td>{Math.floor((item.value-item.investment))}</td>
+              <td>{item.value-item.investment}</td>
+              <td>{item.status}</td>
+              <td><Button>Edit</Button></td>
+              
+            </tr>
+          ))}
+          
+        </tbody>
+      </Table>
         </Row>
           
       </Container>
       <Button onClick={Fungsi}>Click me</Button>
       <Button onClick={handleClick}>Call API</Button>
       <br/>
+      
 
 
 
