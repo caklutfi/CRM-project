@@ -1,6 +1,6 @@
 
 import './App.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import Navigasi from './components/navbar';
 import ProgressCircle from './components/progressBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -40,7 +40,6 @@ function List() {
           setLoading(false);
         }
       };
-
       // Call the fetchData function
       fetchData();
     }
@@ -49,22 +48,7 @@ function List() {
   const handleClick = () => {
     setButtonClicked(true);
   };
-
-  const [user,setUser] = useState([])
-
-  useEffect(()=>{
-    const unsub = onSnapshot(collection(db,'erp'),(snapshot)=>{
-      console.log(snapshot.docs[0].data())
-      setUser(snapshot.docs[0].data())
-    });
-    return unsub
-  },[])
-
-  let dokumen = user.map(detail =>
-    <h1>{detail.representative}</h1>
-  );
-
-
+  
   return (
     <>
     <div className="App">
@@ -80,18 +64,15 @@ function List() {
       <Container fluid className="container-with-shadow">
         <Row>
           <Col><CustomersTable /></Col>
-
-
         </Row>
-          
       </Container>
       <Button onClick={Fungsi}>Click me</Button>
-      <Button onClick={handleClick}>Call API</Button>
       <br/>
 
 
 
     </div>
+
     </>
   );
 }

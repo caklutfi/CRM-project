@@ -1,5 +1,5 @@
-import { Button, Badge, Container, Row, Col, Card, Table} from "react-bootstrap";
-import React, {useState}  from "react";
+import { Button, Badge, Container, Row, Col, Card, Table, Form} from "react-bootstrap";
+import React, {Component, useState}  from "react";
 import Navigasi from "./components/navbar";
 import { useLocation, useSearchParams } from "react-router-dom";
 import pelanggan from "./database";
@@ -7,12 +7,12 @@ import {PieChart} from 'react-minimal-pie-chart';
 import CustomersTable from "./components/table";
 import './BlinkingBadge.css'
 
-import {collection, addDoc} from 'firebase/firestore'
+import {collection, addDoc, onSnapshot, snapshotEqual} from 'firebase/firestore'
 
 
 function Quotation(){
     let [searchParams] = useSearchParams();
-    let nomor = searchParams.get('id') 
+    let nomor = searchParams.get('qn') 
     let investment = pelanggan[nomor].investment 
     
     let sums = pelanggan[nomor].bom[1]*pelanggan[nomor].bom[2]
@@ -38,6 +38,7 @@ function Quotation(){
         setRowData([...rowData, newRow]);
         setShowForm(false);
     }
+
 
     return(
     <>
@@ -87,8 +88,6 @@ function Quotation(){
                 <br/><br/>
                 <h2>Bill of Material <Button type='success' onClick=''> + Add item</Button></h2>
                 <p>Last updated 24/03/2024</p>
-
-              
 
 
                 <Table>
@@ -146,7 +145,7 @@ function Quotation(){
                 </tbody>
             </Table>
             {showForm && (
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                     <td>
                     
                         <input type="text" name="column1" placeholder="No" />
@@ -173,7 +172,7 @@ function Quotation(){
                     
                     </td>
                     <button type="submit">Submit</button>
-                </form>
+                </Form>
             )}
                 <Button onClick={handleAddRowClick}>Add Row</Button>
             </Row>
