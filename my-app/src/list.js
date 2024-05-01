@@ -48,7 +48,28 @@ function List() {
   const handleClick = () => {
     setButtonClicked(true);
   };
-  
+
+  const [user,setUser] = useState([])
+
+  useEffect(()=>{
+    const unsub = onSnapshot(collection(db,'erp'),(snapshot)=>{
+      //console.log(snapshot.docs[0].data())
+      const storeData = snapshot.docs.map(doc => ({
+        ...doc.data()
+      }))
+      setUser(storeData)
+      //console.log(snapshot.docs)
+    });
+    return unsub
+  },[])
+
+  console.log(user)
+
+
+
+
+
+
   return (
     <>
     <div className="App">
@@ -64,10 +85,13 @@ function List() {
       <Container fluid className="container-with-shadow">
         <Row>
           <Col><CustomersTable /></Col>
+
+
         </Row>
       </Container>
       <Button onClick={Fungsi}>Click me</Button>
       <br/>
+      
 
 
 

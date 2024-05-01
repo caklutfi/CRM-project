@@ -7,7 +7,7 @@ import {getFirestore} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCS3uu1gSsqGv1_aBZsAmgBiRttqEj-Vco",
+  apiKey: "",
   authDomain: "erp-pas.firebaseapp.com",
   projectId: "erp-pas",
   storageBucket: "erp-pas.appspot.com",
