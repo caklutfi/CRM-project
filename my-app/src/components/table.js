@@ -1,4 +1,4 @@
-import {Table, Dropdown, Form, Button, Alert, Container,Row, Col} from 'react-bootstrap';
+import {Table, Dropdown, Form, Button, Alert, Container,Row, Col, Badge} from 'react-bootstrap';
 import React, {useEffect, useState} from 'react';
 import Alarm from './alert';
 import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
@@ -62,13 +62,20 @@ function CustomersTable() {
         <td>{individual.revision}</td>
         <td>{individual.company}</td>
         <td>{individual.representative}</td>
-        <td>{Date(individual.dueDate)}</td>
+        <td>{individual.dueDate}</td>
         <td>{individual.typeOfDeal}</td>
         <td>{individual.value}</td>
         <td>{individual.investment}</td>
         <td>###</td>
-        <td>###</td>
-        <td>###</td>
+        <td>{individual.netProfit}</td>
+        {individual.status === 'open' ? (
+        <td><Badge bg='success'>Open</Badge></td>
+      ) : individual.status === 'close' ? (
+        <td><Badge bg='danger'>Close</Badge></td>
+      ) : individual.status === 'hold' ? (
+        <td><Badge bg='warning'>Hold</Badge></td>
+      ) : <td>Undefined</td>
+      }
         <td><Button onClick={() => checkQuotation(individual.qn)}>Edit</Button></td>
       </tr>
       );
@@ -108,8 +115,9 @@ function CustomersTable() {
           representative: formData.representative,
           dueDate: formData.dueDate,
           typeOfDeal: formData.typeOfDeal,
-          value: formData.value,
-          investment: formData.investment
+          value: Number(formData.value),
+          investment: Number(formData.investment),
+          netProfit: 12000000
           
         });
         console.log(typeof formData.value)
@@ -141,7 +149,7 @@ function CustomersTable() {
     </Table>
     </Row>
     <Row>
-      <Table striped variant='dark'>
+      <Table>
         <tbody>
           {showForm && (
            <td>
